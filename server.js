@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 // ================= ROTAS ================= //
 
 // 1. LISTAR PRODUTOS (COM CATEGORIA)
-app.get('/produtos', async (req, res) => {
+app.get('/api/produtos', async (req, res) => {
     const { data, error } = await supabase
         .from('produtos')
         .select(`
@@ -43,7 +43,7 @@ app.get('/produtos', async (req, res) => {
 });
 
 // 2. LISTAR TODAS AS CATEGORIAS
-app.get('/categorias', async (req, res) => {
+app.get('/api/categorias', async (req, res) => {
     const { data, error } = await supabase
         .from('categorias')
         .select('*');
@@ -54,7 +54,7 @@ app.get('/categorias', async (req, res) => {
 });
 
 // 3. BUSCAR PRODUTOS POR CATEGORIA (NOME)
-app.get('/produtos/categoria/:nomeCategoria', async (req, res) => {
+app.get('/api/produtos/categoria/:nomeCategoria', async (req, res) => {
     const { nomeCategoria } = req.params;
 
     const { data, error } = await supabase
@@ -74,7 +74,7 @@ app.get('/produtos/categoria/:nomeCategoria', async (req, res) => {
 });
 
 // 4. CRIAR PRODUTO
-app.post('/produtos', async (req, res) => {
+app.post('/api/produtos', async (req, res) => {
     const { nome, preco, categoria_id, descricao, imagem } = req.body;
 
     if (!nome || preco == null || !categoria_id) {
@@ -94,7 +94,7 @@ app.post('/produtos', async (req, res) => {
 });
 
 // 5. ATUALIZAR PRODUTO
-app.put('/produtos/:id', async (req, res) => {
+app.put('/api/produtos/:id', async (req, res) => {
     const { id } = req.params;
     const { nome, preco, categoria_id, descricao, imagem } = req.body;
 
@@ -114,7 +114,7 @@ app.put('/produtos/:id', async (req, res) => {
 });
 
 // 6. DELETAR PRODUTO (UUID CORRETO)
-app.delete('/produtos/:id', async (req, res) => {
+app.delete('/api/produtos/:id', async (req, res) => {
     const { id } = req.params;
 
     const { data, error } = await supabase
