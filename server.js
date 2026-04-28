@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 // ================= ROTAS ================= //
 
 // 1. Listar todos os produtos
-app.get('/produtos', async (req, res) => {
+app.get('api/produtos', async (req, res) => {
     const { data, error } = await supabase
         .from('produtos')
         .select('*');
@@ -35,7 +35,7 @@ app.get('/produtos', async (req, res) => {
 });
 
 // 2. Listar categorias únicas
-app.get('/categorias', async (req, res) => {
+app.get('api/categorias', async (req, res) => {
     const { data, error } = await supabase
         .from('produtos')
         .select('categoria');
