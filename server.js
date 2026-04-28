@@ -61,7 +61,7 @@ app.get('api/produtos/categoria/:nomeCategoria', async (req, res) => {
 });
 
 // 4. Criar produto
-app.post('/produtos', async (req, res) => {
+app.post('api/produtos', async (req, res) => {
     const { nome, preco, categoria, descricao } = req.body;
 
     if (!nome || preco == null || !categoria) {
@@ -82,7 +82,7 @@ app.post('/produtos', async (req, res) => {
 });
 
 // 5. Atualizar produto
-app.put('/produtos/:id', async (req, res) => {
+app.put('api/produtos/:id', async (req, res) => {
     const { id } = req.params;
     const { nome, preco, categoria, descricao } = req.body;
 
@@ -99,7 +99,7 @@ app.put('/produtos/:id', async (req, res) => {
 });
 
 // 6. Deletar produto
-app.delete('/produtos/:id', async (req, res) => {
+app.delete('api/produtos/:id', async (req, res) => {
     const id = parseInt(req.params.id, 10); // garante que seja número
     if (isNaN(id)) return res.status(400).json({ error: "ID inválido." });
 
