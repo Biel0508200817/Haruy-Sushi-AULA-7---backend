@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 // ================= ROTAS ================= //
 
 // 1. Listar todos os produtos
-app.get('api/produtos', async (req, res) => {
+app.get('/api/produtos', async (req, res) => {
     const { data, error } = await supabase
         .from('produtos')
         .select('*');
