@@ -37,17 +37,16 @@ app.get('/api/produtos', async (req, res) => {
 // 2. Listar categorias únicas
 app.get('/api/categorias', async (req, res) => {
     const { data, error } = await supabase
-        .from('produtos')
-        .select('categoria');
+        .from('categorias')
+        .select('*');
 
     if (error) return res.status(500).json({ error: error.message });
 
-    const categoriasUnicas = [...new Set(data.map(p => p.categoria))];
-    res.json(categoriasUnicas);
+    res.json(data);
 });
 
 // 3. Buscar produtos por categoria
-app.get('/api/produtos/categoria/:nomeCategoria', async (req, res) => {
+app.get('/api/produtos/categorias/:nomeCategoria', async (req, res) => {
     const { nomeCategoria } = req.params;
 
     const { data, error } = await supabase
