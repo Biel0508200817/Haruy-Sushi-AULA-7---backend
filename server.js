@@ -46,7 +46,7 @@ app.get('/categorias', async (req, res) => {
 });
 
 // 3. Buscar produtos por categoria
-app.get('/produtos/categoria/:nomeCategoria', async (req, res) => {
+app.get('api/produtos/categoria/:nomeCategoria', async (req, res) => {
     const { nomeCategoria } = req.params;
 
     const { data, error } = await supabase
