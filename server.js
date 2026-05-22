@@ -60,7 +60,7 @@ app.get('/api/produtos/categorias/:nomeCategoria', async (req, res) => {
     res.json(data);
 });
 
-app.get('/pedidos', async (req, res) => {
+app.get('/api/pedidos', async (req, res) => {
   try {
     // Busca as colunas que você definiu
     const { data, error } = await supabase
