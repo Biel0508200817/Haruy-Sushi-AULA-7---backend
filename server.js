@@ -1,4 +1,5 @@
 
+
 require('dotenv').config();
 
 
@@ -27,11 +28,25 @@ app.use((req, res, next) => {
 
 // 1. Listar todos os produtos
 app.get('/api/produtos', async (req, res) => {
-    const { data, error } = await supabase
+
+    const { categoriaId } = req.query;
+
+    let query = supabase
         .from('produtos')
         .select('*');
 
-    if (error) return res.status(500).json({ error: error.message });
+    if (categoriaId) {
+        query = query.eq('categoria_id', categoriaId);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+        return res.status(500).json({
+            error: error.message
+        });
+    }
+
     res.json(data);
 });
 
@@ -101,6 +116,54 @@ app.post('/api/produtos', async (req, res) => {
     res.status(201).json(data[0]);
 });
 
+// 7. Criar pedido
+// 7. Criar pedido
+app.post('/api/pedidos', async (req, res) => {
+    try {
+        const {
+            cliente_nome,
+            cliente_endereco,
+            itens,
+            total
+        } = req.body;
+
+        if (!cliente_nome || !cliente_endereco || !itens || !total) {
+            return res.status(400).json({
+                erro: 'Dados incompletos'
+            });
+        }
+
+        const { data, error } = await supabase
+            .from('pedidos')
+            .insert([{
+                cliente_nome,
+                cliente_endereco,
+                itens,
+                total
+            }])
+            .select();
+
+        if (error) {
+            console.log(error);
+
+            return res.status(500).json({
+                erro: error.message
+            });
+        }
+
+        res.status(201).json({
+            sucesso: true,
+            pedido: data[0]
+        });
+
+    } catch (err) {
+        console.log(err);
+
+        res.status(500).json({
+            erro: 'Erro interno'
+        });
+    }
+});
 // 5. Atualizar produto
 app.put('/api/produtos/:id', async (req, res) => {
     const { id } = req.params;
