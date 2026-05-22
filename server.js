@@ -60,6 +60,26 @@ app.get('/api/produtos/categorias/:nomeCategoria', async (req, res) => {
     res.json(data);
 });
 
+app.get('/pedidos', async (req, res) => {
+  try {
+    // Busca as colunas que você definiu
+    const { data, error } = await supabase
+      .from('pedidos')
+      .select('id, cliente_nome, cliente_endereco, preco, criado_em')
+      .order('criado_em', { ascending: false });
+
+    if (error) {
+      return res.status(400).json({ erro: error.message });
+    }
+
+    // Retorna a lista de pedidos para o front
+    res.status(200).json(data);
+
+  } catch (err) {
+    res.status(500).json({ erro: 'Erro interno no servidor' });
+  }
+});
+
 // 4. Criar produto
 app.post('/api/produtos', async (req, res) => {
     const { nome, preco, categoria, descricao } = req.body;
