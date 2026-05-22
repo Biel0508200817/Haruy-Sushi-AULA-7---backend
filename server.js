@@ -65,7 +65,7 @@ app.get('/api/pedidos', async (req, res) => {
     // Busca as colunas que você definiu
     const { data, error } = await supabase
       .from('pedidos')
-      .select('id, cliente_nome, cliente_endereco, preco, criado_em')
+      .select('id, cliente_nome, cliente_endereco, total, criado_em')
       .order('criado_em', { ascending: false });
 
     if (error) {
